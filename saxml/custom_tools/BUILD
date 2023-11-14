@@ -6,6 +6,8 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//saxml/client/go:sax",
+        "//saxml/common/platform:env",
+        "//saxml/common/platform:register",
         "@com_github_myzhan_boomer//:boomer",
     ],
 )
