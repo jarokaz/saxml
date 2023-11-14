@@ -4,11 +4,11 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "bazel_skylib",
+    sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
         "https://github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
     ],
-    sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
 )
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
@@ -26,12 +26,11 @@ load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python3_10",
-    python_version = "3.10",
     ignore_root_user_error = True,
+    python_version = "3.10",
 )
 
 load("@python3_10//:defs.bzl", "interpreter")
-
 load("@rules_python//python:pip.bzl", "pip_parse")
 
 pip_parse(
@@ -46,39 +45,39 @@ install_deps()
 
 http_archive(
     name = "pybind11_bazel",
+    sha256 = "516c1b3a10d87740d2b7de6f121f8e19dde2c372ecbfe59aef44cd1872c10395",
     strip_prefix = "pybind11_bazel-72cbbf1fbc830e487e3012862b7b720001b70672",
     urls = ["https://github.com/pybind/pybind11_bazel/archive/72cbbf1fbc830e487e3012862b7b720001b70672.tar.gz"],
-    sha256 = "516c1b3a10d87740d2b7de6f121f8e19dde2c372ecbfe59aef44cd1872c10395",
 )
 
 http_archive(
     name = "pybind11",
+    build_file = "@pybind11_bazel//:pybind11.BUILD",
+    strip_prefix = "pybind11-2.10.1",
     urls = [
         "https://github.com/pybind/pybind11/archive/v2.10.1.tar.gz",
     ],
-    strip_prefix = "pybind11-2.10.1",
-    build_file = "@pybind11_bazel//:pybind11.BUILD",
 )
 
 load("@pybind11_bazel//:python_configure.bzl", "python_configure")
 
 python_configure(
-  name = "local_config_python",
-  python_interpreter_target = interpreter,
+    name = "local_config_python",
+    python_interpreter_target = interpreter,
 )
 
 http_archive(
-  name = "pybind11_abseil",
-  strip_prefix = "pybind11_abseil-1bb411eb1b13440d5af61660e70e8c5b5b2998a1",
-  sha256 = "be5da399b4f62615fdc2a236674638480118f6030d7b16645c6d3f0e208a7f8f",
-  urls = ["https://github.com/pybind/pybind11_abseil/archive/1bb411eb1b13440d5af61660e70e8c5b5b2998a1.zip"],
+    name = "pybind11_abseil",
+    sha256 = "be5da399b4f62615fdc2a236674638480118f6030d7b16645c6d3f0e208a7f8f",
+    strip_prefix = "pybind11_abseil-1bb411eb1b13440d5af61660e70e8c5b5b2998a1",
+    urls = ["https://github.com/pybind/pybind11_abseil/archive/1bb411eb1b13440d5af61660e70e8c5b5b2998a1.zip"],
 )
 
 http_archive(
-  name = "pybind11_protobuf",
-  strip_prefix = "pybind11_protobuf-a50899c2eb604fc5f25deeb8901eff6231b8b3c0",
-  sha256 = "6fa6bcf36aa54087733746a2c41b82e848b120b43576b43e4ab124315539efd7",
-  urls = ["https://github.com/pybind/pybind11_protobuf/archive/a50899c2eb604fc5f25deeb8901eff6231b8b3c0.zip"],
+    name = "pybind11_protobuf",
+    sha256 = "6fa6bcf36aa54087733746a2c41b82e848b120b43576b43e4ab124315539efd7",
+    strip_prefix = "pybind11_protobuf-a50899c2eb604fc5f25deeb8901eff6231b8b3c0",
+    urls = ["https://github.com/pybind/pybind11_protobuf/archive/a50899c2eb604fc5f25deeb8901eff6231b8b3c0.zip"],
 )
 
 http_archive(
@@ -114,11 +113,8 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 go_repository(
@@ -228,38 +224,94 @@ go_repository(
 )
 
 go_repository(
-        name = "com_github_olekukonko_tablewriter",
-        importpath = "github.com/olekukonko/tablewriter",
-        sum = "h1:vHD/YYe1Wolo78koG299f7V/VAS08c6IpCLn+Ejf/w8=",
-        version = "v0.0.4",
+    name = "com_github_olekukonko_tablewriter",
+    importpath = "github.com/olekukonko/tablewriter",
+    sum = "h1:vHD/YYe1Wolo78koG299f7V/VAS08c6IpCLn+Ejf/w8=",
+    version = "v0.0.4",
 )
 
 go_repository(
-        name = "com_github_mattn_go_runewidth",
-        importpath = "github.com/mattn/go-runewidth",
-        sum = "h1:Ei8KR0497xHyKJPAv59M1dkC+rOZCMBJ+t3fZ+twI54=",
-        version = "v0.0.7",
+    name = "com_github_mattn_go_runewidth",
+    importpath = "github.com/mattn/go-runewidth",
+    sum = "h1:Ei8KR0497xHyKJPAv59M1dkC+rOZCMBJ+t3fZ+twI54=",
+    version = "v0.0.7",
 )
 
 go_repository(
-        name = "com_github_google_safehtml",
-        importpath = "github.com/google/safehtml",
-        sum = "h1:EwLKo8qawTKfsi0orxcQAZzu07cICaBeFMegAU9eaT8=",
-        version = "v0.1.0",
+    name = "com_github_google_safehtml",
+    importpath = "github.com/google/safehtml",
+    sum = "h1:EwLKo8qawTKfsi0orxcQAZzu07cICaBeFMegAU9eaT8=",
+    version = "v0.1.0",
 )
 
 go_repository(
-        name = "com_github_pborman_uuid",
-        importpath = "github.com/pborman/uuid",
-        sum = "h1:J7Q5mO4ysT1dv8hyrUGHb9+ooztCXu1D8MY8DZYsu3g=",
-        version = "v1.2.0",
+    name = "com_github_pborman_uuid",
+    importpath = "github.com/pborman/uuid",
+    sum = "h1:J7Q5mO4ysT1dv8hyrUGHb9+ooztCXu1D8MY8DZYsu3g=",
+    version = "v1.2.0",
 )
 
 go_repository(
-        name = "com_github_google_uuid",
-        importpath = "github.com/google/uuid",
-        sum = "h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=",
-        version = "v1.3.0",
+    name = "com_github_google_uuid",
+    importpath = "github.com/google/uuid",
+    sum = "h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=",
+    version = "v1.3.0",
+)
+
+go_repository(
+    name = "com_github_myzhan_boomer",
+    importpath = "github.com/myzhan/boomer",
+    sum = "h1:xjgvmhDjgU9IEKnB7nU1HyoVEfj8SuuU3u6oY3Nugj0=",
+    version = "v1.6.0",
+)
+
+go_repository(
+    name = "com_github_asaskevich_eventbus",
+    importpath = "github.com/asaskevich/EventBus",
+    sum = "h1:2JGTg6JapxP9/R33ZaagQtAM4EkkSYnIAlOG5EI8gkM=",
+    version = "v0.0.0-20200907212545-49d423059eef",
+)
+
+go_repository(
+    name = "com_github_zeromq_gomq",
+    importpath = "github.com/zeromq/gomq",
+    sum = "h1:vGjfCnWv/zWeO1ivv4+OUPgTzG/WV1iGfZwVdtUpLkM=",
+    version = "v0.0.0-20201031135124-cef4e507bb8e",
+)
+
+go_repository(
+    name = "com_github_zeromq_gomq_zmtp",
+    importpath = "github.com/zeromq/gomq/zmtp",
+    sum = "h1:pjp04/sSr2TYuaPdt+u6Cc1M38Aocp+3er0akr3auFg=",
+    version = "v0.0.0-20201031135124-cef4e507bb8e",
+)
+
+go_repository(
+    name = "com_github_ugorji_go_codec",
+    importpath = "github.com/ugorji/go/codec",
+    sum = "h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4dU=",
+    version = "v1.2.11",
+)
+
+go_repository(
+    name = "com_github_shirou_gopsutil",
+    importpath = "github.com/shirou/gopsutil",
+    sum = "h1:+1+c1VGhc88SSonWP6foOcLhvnKlUeu/erjjvaPEYiI=",
+    version = "v3.21.11+incompatible",
+)
+
+go_repository(
+    name = "com_github_tklauser_go_sysconf",
+    importpath = "github.com/tklauser/go-sysconf",
+    sum = "h1:0QaGUFOdQaIVdPgfITYzaTegZvdCjmYO52cSFAEVmqU=",
+    version = "v0.3.12",
+)
+
+go_repository(
+    name = "com_github_tklauser_numcpus",
+    importpath = "github.com/tklauser/numcpus",
+    sum = "h1:ng9scYS7az0Bk4OZLvrNXNSAO2Pxr1XXRAPyjhIx+Fk=",
+    version = "v0.6.1",
 )
 
 go_rules_dependencies()
@@ -318,52 +370,55 @@ load("@rules_cc//cc:repositories.bzl", "rules_cc_dependencies")
 rules_cc_dependencies()
 
 http_archive(
-  name = "com_google_absl",
-  urls = ["https://github.com/abseil/abseil-cpp/archive/98eb410c93ad059f9bba1bf43f5bb916fc92a5ea.zip"],
-  strip_prefix = "abseil-cpp-98eb410c93ad059f9bba1bf43f5bb916fc92a5ea",
+    name = "com_google_absl",
+    strip_prefix = "abseil-cpp-98eb410c93ad059f9bba1bf43f5bb916fc92a5ea",
+    urls = ["https://github.com/abseil/abseil-cpp/archive/98eb410c93ad059f9bba1bf43f5bb916fc92a5ea.zip"],
 )
 
 http_archive(
-  name = "com_google_googletest",
-  urls = ["https://github.com/google/googletest/archive/011959aafddcd30611003de96cfd8d7a7685c700.zip"],
-  strip_prefix = "googletest-011959aafddcd30611003de96cfd8d7a7685c700",
+    name = "com_google_googletest",
+    strip_prefix = "googletest-011959aafddcd30611003de96cfd8d7a7685c700",
+    urls = ["https://github.com/google/googletest/archive/011959aafddcd30611003de96cfd8d7a7685c700.zip"],
 )
 
 http_archive(
     name = "darts_clone",
-    urls = ["https://github.com/s-yata/darts-clone/archive/e40ce4627526985a7767444b6ed6893ab6ff8983.zip"],
+    build_file = "//saxml/server/tf/darts_clone:BUILD",
     sha256 = "c97f55d05c98da6fcaf7f9ecc6a6dc6bc5b18b8564465f77abff8879d446491c",
     strip_prefix = "darts-clone-e40ce4627526985a7767444b6ed6893ab6ff8983",
-    build_file = "//saxml/server/tf/darts_clone:BUILD",
+    urls = ["https://github.com/s-yata/darts-clone/archive/e40ce4627526985a7767444b6ed6893ab6ff8983.zip"],
 )
 
 http_archive(
     name = "com_google_sentencepiece",
-    urls = ["https://github.com/google/sentencepiece/archive/refs/tags/v0.1.96.zip"],
+    build_file = "//saxml/server/tf/sentencepiece:BUILD",
+    patch_args = ["-p1"],
+    patches = ["//saxml/server/tf/sentencepiece:sp.patch"],
     sha256 = "8409b0126ebd62b256c685d5757150cf7fcb2b92a2f2b98efb3f38fc36719754",
     strip_prefix = "sentencepiece-0.1.96",
-    build_file = "//saxml/server/tf/sentencepiece:BUILD",
-    patches = ["//saxml/server/tf/sentencepiece:sp.patch"],
-    patch_args = ["-p1"],
+    urls = ["https://github.com/google/sentencepiece/archive/refs/tags/v0.1.96.zip"],
 )
 
 http_archive(
-  name = "com_google_paxml",
-  urls = ["https://github.com/google/paxml/archive/7002d940abbfb38e0cfe40be2847859c68f45c7a.zip"],
-  strip_prefix = "paxml-7002d940abbfb38e0cfe40be2847859c68f45c7a",
+    name = "com_google_paxml",
+    strip_prefix = "paxml-7002d940abbfb38e0cfe40be2847859c68f45c7a",
+    urls = ["https://github.com/google/paxml/archive/7002d940abbfb38e0cfe40be2847859c68f45c7a.zip"],
 )
 
 http_archive(
-  name = "org_tensorflow",
-  urls = ["https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.11.0.tar.gz"],
-  strip_prefix = "tensorflow-2.11.0",
+    name = "org_tensorflow",
+    strip_prefix = "tensorflow-2.11.0",
+    urls = ["https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.11.0.tar.gz"],
 )
 
 load("@org_tensorflow//tensorflow:workspace3.bzl", "tf_workspace3")
+
 tf_workspace3()
 
 load("@org_tensorflow//tensorflow:workspace2.bzl", "tf_workspace2")
+
 tf_workspace2()
 
 load("@org_tensorflow//tensorflow:workspace1.bzl", "tf_workspace1")
-tf_workspace1(with_rules_cc=False)
+
+tf_workspace1(with_rules_cc = False)
