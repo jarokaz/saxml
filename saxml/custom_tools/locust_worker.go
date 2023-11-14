@@ -50,21 +50,14 @@ func lm_generate() {
     
 }
 
-var globalBoomer *boomer.Boomer
+//var globalBoomer *boomer.Boomer
 var globalLm *sax.LanguageModel
 var ctx context.Context
 
 func main(){
     log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-//    task1 := &boomer.Task{
-//        Name: "foo",
-//        // The weight is used to distribute goroutines over multiple tasks.
-//        Weight: 10,
-//        Fn: foo,
-//    }
-
-    task2 := &boomer.Task{
+    task := &boomer.Task{
         Name: "lm.Generate",
         // The weight is used to distribute goroutines over multiple tasks.
         Weight: 10,
@@ -83,10 +76,11 @@ func main(){
     ctx = context.Background()
     env.Get().Init(ctx)
 
-    numClients := 1
-	spawnRate := float64(1)
-	globalBoomer = boomer.NewStandaloneBoomer(numClients, spawnRate)
-	globalBoomer.AddOutput(boomer.NewConsoleOutput()) 
+    //numClients := 1
+	//spawnRate := float64(1)
+	//globalBoomer = boomer.NewStandaloneBoomer(numClients, spawnRate)
+	//globalBoomer.AddOutput(boomer.NewConsoleOutput()) 
     // Start tasks
-    globalBoomer.Run(task2)
+    //globalBoomer.Run(task)
+    boomer.Run(task)
 }
